@@ -1,5 +1,5 @@
 from wtforms.validators import email
-
+from werkzeug.security import generate_password_hash
 from ext import app, db
 from models import Product, User
 
@@ -25,12 +25,12 @@ with app.app_context():
     db.session.add(new_product)
     db.session.commit()
 
-  admin_user = User(email="admin@example.com", password="adminpassword", role="admin")
+  hashed_password = generate_password_hash("adminpassword")
+
+  admin_user = User(email="admin@example.com", password=hashed_password, role="admin")
 
   db.session.add(admin_user)
   db.session.commit()
-
-
 
 
 
